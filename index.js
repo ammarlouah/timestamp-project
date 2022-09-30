@@ -29,16 +29,22 @@ app.get("/api/hello", function (req, res) {
 
 
 app.get("/api/:date?",function(req,res){
-  if(typeof (req.params.date)=== 'undefined') req.date = new Date();
-  else{
-    if(!isNaN(req.params.date)) req.params.date=+(req.params.date);
-    req.date = new Date(req.params.date);
+
+    if(typeof (req.params.date)=== 'undefined') req.date = new Date();
+    else{
+      if(!isNaN(req.params.date)) req.params.date=+(req.params.date);
+      req.date = new Date(req.params.date);
+    console.log(req.date);
+    if((req.date).toGMTString()==="Invalid Date") res.json({
+      "error" : (req.date).toGMTString()
+    })
+    else{
+      res.json({
+      "unix" : (req.date).getTime(),
+      "utc" : (req.date).toGMTString()
+    })
   }
-  console.log(req.date);
-  res.json({
-    "unix" : (req.date).getTime(),
-    "utc" : (req.date).toString()
-  })
+}
 })
 
 
