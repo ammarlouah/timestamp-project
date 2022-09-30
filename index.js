@@ -34,17 +34,18 @@ app.get("/api/:date?",function(req,res){
     else{
       if(!isNaN(req.params.date)) req.params.date=+(req.params.date);
       req.date = new Date(req.params.date);
-    console.log(req.date);
-    if((req.date).toGMTString()==="Invalid Date") res.json({
-      "error" : (req.date).toGMTString()
-    })
-    else{
-      res.json({
+      console.log(req.date);
+      if((req.date).toGMTString()==="Invalid Date") {
+        res.json({
+        "error" : (req.date).toGMTString()
+        })
+        return;
+      }
+    }
+    res.json({
       "unix" : (req.date).getTime(),
       "utc" : (req.date).toGMTString()
     })
-  }
-}
 })
 
 
